@@ -1,2 +1,8 @@
 # Pycharm files
 .idea/
+
+# Private settings
+private_*.py
+
+# Compiled files
+*.pyc
