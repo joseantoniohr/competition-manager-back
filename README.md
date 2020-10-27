@@ -1,18 +1,8 @@
 # Competition Manager
 
-This project is a basic API to work as the backend of a CRM. This API manages customer data for a small shop. 
-For more details click [here](resources/TheAgileMonkeys-API_Test-The_CRM_service.pdf).
 
 ## Project Structure
 
-There are four different directories in the project, they are explained below:
-
-* **resources**: This directory contains the files that this "README" links.
-* **theam_crm**: It's the main directory of the project. It contains the configuration parameters, the abstract 
-classes and the most important utilities that will be used through the project.
-* **customers**: This is one of two apps that this project has. Here it's declared the customer data and its
-funcionality
-* **api**: this is the other app of the project. It includes the functionality of the API.
 
 ## Getting Started
 
@@ -52,7 +42,7 @@ $ docker-compose up
 We need to create database and a user that access the application, but first we have to access to the container.
 
 ```
-$ docker exec -ti theam_crm bash  # Access to container
+$ docker exec -ti competition_manager bash  # Access to container
 
 /code# python manage.py migrate  # Create database and its tables
 /code# python manage.py createsuperuser  # Create to superuser to can use the application and API
@@ -60,89 +50,11 @@ $ docker exec -ti theam_crm bash  # Access to container
 
 ## How to use
 
-Now you should be able to use the API. There are four available tools to play the API and check the specifications:
-
-* **Swagger** /api/v1/swagger/
-* **Redoc** /api/v1/redoc/
-* **DRF** /api/v1/ (this is the default tool that Django Rest Framework supplies)
-* In addition, there is an available **POSTMAN collection** to use the API easily [here](resources/Theam_CRM.postman_collection.json) .
-
-The API is versioned. The first version is the 'v1' and it has two main endpoints:
-
-### Users
-
-The available methods for User model are:
-```
-/api/v1/users/  # GET - User list
-/api/v1/users/  # POST - Create a user
-/api/v1/users/<user_id>/  # GET - Retrieve a user
-/api/v1/users/<user_id>/  # PUT - Update a user
-/api/v1/users/<user_id>/  # DELETE - Remove a user
-```
-
-### Customers
-
-The available methods for Customer model are:
-```
-/api/v1/customers/  # GET - Customer list
-/api/v1/customers/  # POST - Create a customer
-/api/v1/customers/<customer_id>/  # GET - Retrieve detailed information of a customer
-/api/v1/customers/<customer_id>/  # PUT - Update a customer
-/api/v1/customers/<customer_id>/  # DELETE - Remove a customer
-```
-
-In addition, there is an endpoint to get the logs of a user:
-
-```
-/api/v1/users/<customer_id>/logs/  # GET - Retrieve the customer logs
-```
-
-The user can get their token from this endpoint as well
-```
-/api/v1/token-auth/  # POST - the arguments are 'username' and 'password'
-```
-
-The most important characteristics that this API has, are the next:
-
-* **Authentication**: The authentication types that are allowed to this endpoints are **Basic Authentication** to can use DRF tool and
-*Token Authentication**.
-
-* **Pagination**: the max sizes of each page is 150 elements (default value is 150). However, this value could be changed, 
-within the range [0, 150]. To change this value in the request you have to add the parameter '__page_size__' and 
-set the desired value.
-```
-/api/v1/users/?page_size=50  # It will return a list of users with 50 elements if there are.
-```
-
-* **Throttling**: a throttle's been added, limiting the number of requests per minute to 60. This affects to all users.
-
-* **Filtering**: in endpoints where all the registers of the models are shown, the API users can filter the data. There is
-a unique parameter to do the endpoint searches, '__search__'. With this parameter the user can filter by all different 
-established fields. To filter out users, the fields are: **username**, **first_name**, **last_name** and **email**.
-And to filter out customer, the fields are: **first_name**, **last_name**, **phone** and **email**.
-```
-/api/v1/customers/?search=first_name&search=last_surname  # It will return a list of customers that match with the parameters
-```
-
-## Oauth2
-
-### User authentication with third party provider
-
-There is a PDF available [here](resources/how_to_set_up_oauth.pdf) where the steps to follow are explained. Google's been 
-selected as third party provider. This document explains how to set up the project using Google as provider. 
-You should have followed the three steps described previously.
-
-### API as Oauth Provider
-
-It's quite easy create an authorization server with Django. But in this case, it doesn't make sense to develop it
-if the user authentication with third party provider is available. So, there are many comments 
-in the code that indicate how to prepare the server for this purpose. You can find them using the **Oauth2** keyword.
-If you want me to expand on the topic, please let me know.
 
 
 ## Running the tests
 
-To Run the tests in Django it's really easy. First, you should be inside the docker container, **theam_crm**.
+To Run the tests in Django it's really easy. First, you should be inside the docker container, **competition_manager**.
 
 When you are inside, you will just execute this command:
 
@@ -183,29 +95,11 @@ Destroying test database for alias 'default'...
 
 ## Taking it to production
 
-This web application is mostly ready for production. But we have to change a few parameters only to do that, for example:
 
-* **Static and media files**: these files are stored in the same server that web application. In production, we would
-change this configuration, and these files could be stored in AWS S3.
-
-* **Database**: this project is configured to use a local SQlite database. However in production, we'd use another
-RDBMS as PostgreSQL or MySQL. And they could run in a AWS RDS.
-
-* **Sensitive Data**: this data would be in a private settings file and wouldn't be in the repository. This file'd
-have information like SECRET_KEY, DB credentials, LIVE mode (DEBUG = False), etc.
-
-To change this behaviour is quite easy in Django, and it's enough with changing the parameters in the settings file 
-and installing the specific libraries for that (for example to use AWS S3).
 
 ## Future improvements
 
-You could always add as many improvements as you want. In my opinion, the next improvements'd be:
 
-* Add a **tool for error monitoring** as Sentry, it works quite well with Django.
-* Create a **new endpoint to recover the password**.
-* **Add logs to User endpoints** like Customer endpoints have.
-* **Add logs for the received requests in the API**.
-* Implement **token expiration** and **token refresh**.
 
 ## Built With
 
