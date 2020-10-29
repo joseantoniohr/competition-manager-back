@@ -5,7 +5,7 @@ from competition_manager import model_managers as base_managers
 
 class BaseModelCreation(models.Model):
 
-    created_at = models.DateTimeField(auto_created=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
 
     class Meta:
         abstract = True
@@ -13,7 +13,7 @@ class BaseModelCreation(models.Model):
 
 class BaseModelEdition(models.Model):
 
-    updated_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
 
     class Meta:
         abstract = True
