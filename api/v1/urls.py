@@ -10,6 +10,7 @@ from api.v1.competitions import views as competitions_views
 
 router = routers.DefaultRouter()
 router.register(r'seasons', competitions_views.SeasonViewSet)
+router.register(r'competition-sections', competitions_views.CompetitionViewSet)
 router.register(r'competitions', competitions_views.CompetitionViewSet)
 
 schema_view = get_schema_view(
